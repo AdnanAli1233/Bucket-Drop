@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_margin="84dp"
+        android:layout_width="192dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="192dp"
+        app:srcCompat="@drawable/logo"/>
+
+    <Button
+        android:id="@+id/add_a_drop"
+        android:layout_below="@id/logo"
+        android:fontFamily="sans-serif-thin"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/add_a_drop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/btn_add_a_drop"
+        android:paddingBottom="8dp"
+        android:textAllCaps="false"
+        android:textSize="28sp"
+        android:text="@string/add_a_drop" />
+</RelativeLayout>
