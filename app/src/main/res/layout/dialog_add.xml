@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_tiltle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        android:text="@string/add_a_drop"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <ImageButton
+        android:id="@+id/close_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tv_tiltle"
+        app:srcCompat="@drawable/ic_close" />
+
+    <EditText
+        android:id="@+id/dialog_tv"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/tv_tiltle"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="what is it?" />
+
+    <DatePicker
+        android:id="@+id/dialog_datepicker"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/dialog_tv"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/dialog_add"
+        android:layout_below="@+id/dialog_datepicker"
+        android:layout_width="match_parent"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Add it" />
+
+
+</RelativeLayout>

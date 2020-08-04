@@ -2,8 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/empty_drop"/>
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar" />
+
+
+
+    <com.gyst.droplet.widgets.BucketRecyclerView
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:id="@+id/ma_recyclerview"
+        android:layout_height="match_parent" />
+
+    <include layout="@layout/empty_drop" android:id="@+id/empty_view"/>
+
+
+
+
 </RelativeLayout>
