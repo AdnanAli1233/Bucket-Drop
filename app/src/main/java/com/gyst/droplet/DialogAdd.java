@@ -54,6 +54,7 @@ public class DialogAdd extends DialogFragment {
     }
 
     public DialogAdd() {
+
     }
 
     @Nullable

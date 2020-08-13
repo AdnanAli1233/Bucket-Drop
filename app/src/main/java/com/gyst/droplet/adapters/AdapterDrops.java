@@ -11,11 +11,12 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 import com.gyst.droplet.R;
 import com.gyst.droplet.beans.Drop;
 
-public class AdapterDrops extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterDrops extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SwipeListener {
     private LayoutInflater mInflater;
     private RealmResults<Drop> mResults;
     public static final String TAG="VIVZ";
@@ -23,10 +24,17 @@ public class AdapterDrops extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final int ITEM = 0;
     public static final int FOOTER = 1;
 
-    public AdapterDrops(Context context, RealmResults<Drop> results) {
+    AddListener addListener;
+    Realm realm;
+    MarkListener mMarkListener;
+    public AdapterDrops(Context context, RealmResults<Drop> results, AddListener addListener, Realm realm, MarkListener markListener) {
         mInflater = LayoutInflater.from(context);
         update(results);
+        this.addListener = addListener;
+        this.realm = realm;
+        mMarkListener = markListener;
     }
+
 
     public void update(RealmResults<Drop> results){
         mResults = results;
@@ -38,10 +46,10 @@ public class AdapterDrops extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ViewHolder newHolder;
         if(viewType==FOOTER){
             View view =mInflater.inflate(R.layout.footer, parent, false);
-            newHolder=  new FootHolder(view);
+            newHolder=  new FootHolder(view, addListener);
         }else{
             View view = mInflater.inflate(R.layout.row_drop, parent, false);
-            newHolder= new DropHolder(view);
+            newHolder= new DropHolder(view, mMarkListener);
         }
         return newHolder;
     }
@@ -68,24 +76,54 @@ public class AdapterDrops extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mResults.size()+1;
-    }
-
-    public static class DropHolder extends RecyclerView.ViewHolder {
-
-        TextView mTextWhat;
-        public DropHolder(View itemView) {
-            super(itemView);
-            mTextWhat = (TextView) itemView.findViewById(R.id.tv_what);
+        if(mResults== null || mResults.isEmpty()){
+            return 0;
+        }else {
+            return mResults.size()+1;
         }
     }
 
-    public static class FootHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onSwipe(int position) {
+        if(position<mResults.size()){
+            realm.beginTransaction();
+            mResults.get(position).deleteFromRealm();
+            realm.commitTransaction();
+            notifyItemRemoved(position);
+        }
 
+    }
+
+    public static class DropHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView mTextWhat;
+        MarkListener mMarkListener;
+        public DropHolder(View itemView, MarkListener mMarkListener) {
+            super(itemView);
+            mTextWhat = (TextView) itemView.findViewById(R.id.tv_what);
+            itemView.setOnClickListener(this);
+            this.mMarkListener = mMarkListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            mMarkListener.showDialogMark(getAdapterPosition());
+        }
+    }
+
+    public static class FootHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         Button add;
-        public FootHolder(View itemView) {
+        AddListener addListener;
+        public FootHolder(View itemView, AddListener addListener) {
             super(itemView);
             add = (Button) itemView.findViewById(R.id.footer);
+            add.setOnClickListener(this);
+            this.addListener = addListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            addListener.add();
         }
     }
 }

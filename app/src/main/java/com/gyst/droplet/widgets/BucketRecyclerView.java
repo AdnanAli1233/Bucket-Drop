@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,7 +52,7 @@ public class BucketRecyclerView extends RecyclerView {
 
     private void toggleViews() {
         if(getAdapter()!= null && !mNonEmptyViews.isEmpty() && !mEmptyViews.isEmpty()){
-            if(getAdapter().getItemCount()==1){
+            if(getAdapter().getItemCount()==0){
                 for (View view: mEmptyViews) {
                     view.setVisibility(View.VISIBLE);
                 }
@@ -62,7 +61,7 @@ public class BucketRecyclerView extends RecyclerView {
                     view.setVisibility(View.GONE);
                 }
                 setVisibility(GONE);
-            }else if(getAdapter().getItemCount()>1){
+            }else{
                 for (View view: mEmptyViews) {
                     view.setVisibility(View.GONE);
                 }
